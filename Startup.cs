@@ -28,6 +28,7 @@ namespace TicketSystem
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors();
             services.AddDbContext<DataContext>(options =>
                     options.UseSqlServer(_configuration.GetConnectionString("DataContext")));
         }
@@ -43,6 +44,8 @@ namespace TicketSystem
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(policy => policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
 
             app.UseAuthorization();
 
